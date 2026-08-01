@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SocioCredits - Microcréditos Rápidos en Neiva</title>
+  <style>
+    :root {
+      --primary: #00875A;
+      --primary-dark: #006644;
+      --bg: #F4F5F7;
+      --card: #FFFFFF;
+      --text: #172B4D;
+      --gray: #6B778C;
+      --accent: #FFAB00;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: system-ui, -apple-system, sans-serif; }
+    body { background-color: var(--bg); color: var(--text); padding: 16px; display: flex; justify-content: center; }
+    
+    .container { width: 100%; max-width: 480px; }
+    
+    .header { text-align: center; margin-bottom: 20px; }
+    .header h1 { color: var(--primary); font-size: 28px; }
+    .header p { color: var(--gray); font-size: 14px; margin-top: 4px; }
+
+    .card { background: var(--card); border-radius: 12px; padding: 20px; box-shadow: 0 4px 12px rgba(0,0,0,0.08); margin-bottom: 16px; }
+    .card-title { font-size: 18px; font-weight: bold; margin-bottom: 16px; border-bottom: 2px solid var(--bg); padding-bottom: 8px; }
+
+    .form-group { margin-bottom: 16px; }
+    label { display: block; font-size: 14px; font-weight: 600; margin-bottom: 6px; }
+    
+    input[type="range"] { width: 100%; accent-color: var(--primary); }
+    input[type="text"], input[type="tel"], select { width: 100%; padding: 12px; border: 1px solid #DFE1E6; border-radius: 6px; font-size: 15px; outline: none; }
+    input:focus, select:focus { border-color: var(--primary); }
+
+    .amount-display { text-align: center; font-size: 32px; font-weight: bold; color: var(--primary); margin: 10px 0; }
+    
+    .summary-box { background: #E3FCEF; border-radius: 8px; padding: 14px; margin-top: 16px; }
+    .summary-row { display: flex; justify-content: space-between; margin-bottom: 8px; font-size: 14px; }
+    .summary-row.total { font-weight: bold; font-size: 16px; border-top: 1px solid #ABF5D1; padding-top: 8px; margin-bottom: 0; color: var(--primary-dark); }
+
+    .alert-box { background: #FFF0B3; border-left: 4px solid var(--accent); padding: 12px; border-radius: 6px; font-size: 13px; margin-bottom: 16px; color: #172B4D; }
+    .alert-box ul { margin-left: 18px; margin-top: 6px; }
+
+    .btn { width: 100%; background: var(--primary); color: white; border: none; padding: 14px; border-radius: 8px; font-size: 16px; font-weight: bold; cursor: pointer; transition: 0.2s; }
+    .btn:hover { background: var(--primary-dark); }
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <div class="header">
+    <h1>SocioCredits</h1>
+    <p>Microcréditos al instante para Neiva, Huila 🇨🇴</p>
+  </div>
+
+  <!-- SIMULADOR DE CRÉDITO -->
+  <div class="card">
+    <div class="card-title">1. Simula tu Crédito</div>
+    
+    <div class="form-group">
+      <label for="montoRange">Monto a solicitar:</label>
+      <div class="amount-display" id="montoTexto">$10.000 COP</div>
+      <input type="range" id="montoRange" min="10000" max="100000" step="5000" value="10000">
+    </div>
+
+    <div class="form-group">
+      <label for="frecuencia">Modalidad de pago:</label>
+      <select id="frecuencia">
+        <option value="semanal">Cuotas Semanales (Cada 7 días)</option>
+        <option value="unico">Pago Único</option>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label for="plazo" id="labelPlazo">Plazo de pago:</label>
+      <select id="plazo"></select>
+    </div>
+
+    <div class="summary-box">
+      <div class="summary-row">
+        <span>Tasa de Costos Aplicada:</span>
+        <span id="porcentajeTexto">40%</span>
+      </div>
+      <div class="summary-row">
+        <span>Gestión, Contrato y Seguro:</span>
+        <span id="costoAdicional">$0</span>
+      </div>
+      <div class="summary-row total">
+        <span>Total a Pagar:</span>
+        <span id="totalPagar">$0</span>
+      </div>
+      <div class="summary-row" style="margin-top: 6px; font-weight: 600;" id="rowCuota">
+        <span>Valor por Cuota:</span>
+        <span id="valorCuota">$0</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- FORMULARIO COMPLETO DE SEGURIDAD Y VERIFICACIÓN -->
+  <div class="card">
+    <div class="card-title">2. Verificación de Identidad</div>
+    
+    <div class="form-group">
+      <label for="nombre">Nombre Completo (como en la cédula):</label>
+      <input type="text" id="nombre" placeholder="Ej: Juan Carlos Pérez Gómez">
+    </div>
+
+    <div class="form-group">
+      <label for="cedula">Número de Cédula de Ciudadanía:</label>
+      <input type="tel" id="cedula" placeholder="Ej: 1075123456">
+    </div>
+
+    <div class="form-group">
+      <label for="celular">Número de Celular / WhatsApp:</label>
+      <input type="tel" id="celular" placeholder="Ej: 3101234567">
+    </div>
+
+    <div class="form-group">
+      <label for="barrio">Barrio y Dirección en Neiva:</label>
+      <input type="text" id="barrio" placeholder="Ej: Calle 8 # 15-20, Las Granjas">
+    </div>
+
+    <div class="form-group">
+      <label for="ocupacion">Actividad Económica / Ocupación:</label>
+      <select id="ocupacion">
+        <option value="Empleado">Empleado (Empresa / Comercio)</option>
+        <option value="Independiente">Independiente / Negocio Propio</option>
+        <option value="MotoTrabajador">Mototrabajador / Domiciliario</option>
+        <option value="Estudiante">Estudiante</option>
+        <option value="Otro">Otro</option>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label for="nequi">Número de Nequi o Daviplata (para desembolso):</label>
+      <input type="tel" id="nequi" placeholder="Ej: 3101234567">
+    </div>
+
+    <!-- REQUISITOS DE FOTOS PARA SEGURIDAD -->
+    <div class="alert-box">
+      <strong>📌 Requisitos de Seguridad (Anti-Fraude):</strong>
+      <p style="margin-top: 4px;">Al enviar la solicitud, deberás adjuntar al chat de WhatsApp:</p>
+      <ul>
+        <li>📷 Foto clara de tu Cédula (Frente y Vuelta).</li>
+        <li>🤳 Selfie sosteniendo tu cédula junto a tu rostro.</li>
+        <li>📄 Foto de un recibo público de tu vivienda en Neiva.</li>
+      </ul>
+    </div>
+
+    <button class="btn" onclick="procesarSolicitud()">Enviar Solicitud a WhatsApp</button>
+  </div>
+</div>
+
+<script>
+  // ⚠️ CONFIGURA TU NÚMERO DE WHATSAPP AQUÍ (Con prefijo 57 de Colombia, sin espacios ni el signo +)
+  var NUMERO_WHATSAPP = "573000000000"; 
+
+  var CARGO_BASE_MICRO = 3000;
+
+  var montoRange = document.getElementById('montoRange');
+  var montoTexto = document.getElementById('montoTexto');
+  var frecuenciaSelect = document.getElementById('frecuencia');
+  var plazoSelect = document.getElementById('plazo');
+  var porcentajeTextoEl = document.getElementById('porcentajeTexto');
+  var costoAdicionalEl = document.getElementById('costoAdicional');
+  var totalPagarEl = document.getElementById('totalPagar');
+  var valorCuotaEl = document.getElementById('valorCuota');
+  var rowCuota = document.getElementById('rowCuota');
+
+  function formatoCOP(valor) {
+    return new Intl.NumberFormat('es-CO', { style: 'currency', currency: 'COP', maximumFractionDigits: 0 }).format(valor);
+  }
+
+  function actualizarPlazos() {
+    var frecuencia = frecuenciaSelect.value;
+    plazoSelect.innerHTML = '';
+
+    if (frecuencia === 'semanal') {
+      for (var i = 1; i <= 8; i++) {
+        var opt = document.createElement('option');
+        opt.value = i;
+        opt.textContent = i + (i === 1 ? ' Semana' : ' Semanas');
+        plazoSelect.appendChild(opt);
+      }
+      rowCuota.style.display = 'flex';
+    } else {
+      var opt1 = document.createElement('option'); opt1.value = 1; opt1.textContent = '1 Mes (30 días)';
+      var opt2 = document.createElement('option'); opt2.value = 2; opt2.textContent = '2 Meses (60 días)';
+      plazoSelect.appendChild(opt1);
+      plazoSelect.appendChild(opt2);
+      rowCuota.style.display = 'none';
+    }
+    calcularSimulacion();
+  }
+
+  function calcularSimulacion() {
+    var monto = parseInt(montoRange.value);
+    var frecuencia = frecuenciaSelect.value;
+    var numPlazo = parseInt(plazoSelect.value) || 1;
+
+    montoTexto.textContent = formatoCOP(monto);
+
+    var esMayorAUnMes = (frecuencia === 'semanal' && numPlazo > 4) || (frecuencia === 'unico' && numPlazo === 2);
+    var porcentajeAplicado = esMayorAUnMes ? 0.55 : 0.40;
+
+    porcentajeTextoEl.textContent = (porcentajeAplicado * 100) + "%";
+
+    var costoVariable = monto * porcentajeAplicado;
+    var cargoBase = (monto <= 50000) ? CARGO_BASE_MICRO : 0;
+    var costoTotalAdicional = costoVariable + cargoBase;
+    
+    var totalPagar = monto + costoTotalAdicional;
+
+    costoAdicionalEl.textContent = formatoCOP(costoTotalAdicional);
+    totalPagarEl.textContent = formatoCOP(totalPagar);
+
+    if (frecuencia === 'semanal') {
+      var cuota = Math.ceil(totalPagar / numPlazo);
+      valorCuotaEl.textContent = formatoCOP(cuota);
+    }
+  }
+
+  montoRange.addEventListener('input', calcularSimulacion);
+  frecuenciaSelect.addEventListener('change', actualizarPlazos);
+  plazoSelect.addEventListener('change', calcularSimulacion);
+
+  actualizarPlazos();
+
+  // PROCESAMIENTO Y ENVÍO A WHATSAPP
+  function procesarSolicitud() {
+    var nombre = document.getElementById('nombre').value.trim();
+    var cedula = document.getElementById('cedula').value.trim();
+    var celular = document.getElementById('celular').value.trim();
+    var barrio = document.getElementById('barrio').value.trim();
+    var ocupacion = document.getElementById('ocupacion').value;
+    var nequi = document.getElementById('nequi').value.trim();
+
+    if (!nombre || !cedula || !celular || !barrio || !nequi) {
+      alert("⚠️ Por favor completa todos los campos del formulario antes de continuar.");
+      return;
+    }
+
+    var monto = formatoCOP(montoRange.value);
+    var modo = frecuenciaSelect.value === 'semanal' ? 'Cuotas Semanales' : 'Pago Único';
+    var plazoTxt = plazoSelect.options[plazoSelect.selectedIndex].text;
+    var tasaTxt = porcentajeTextoEl.textContent;
+    var totalTxt = totalPagarEl.textContent;
+    var cuotaTxt = frecuenciaSelect.value === 'semanal' ? valorCuotaEl.textContent : 'N/A (Pago Único)';
+
+    var mensaje = "🚨 *NUEVA SOLICITUD - SOCIOCREDITS* 🚨\n\n" +
+      "👤 *DATOS DEL CLIENTE:*\n" +
+      "• Nombre: " + nombre + "\n" +
+      "• Cédula: " + cedula + "\n" +
+      "• Celular/WA: " + celular + "\n" +
+      "• Dirección/Barrio (Neiva): " + barrio + "\n" +
+      "• Ocupación: " + ocupacion + "\n" +
+      "• Nequi/Daviplata: " + nequi + "\n\n" +
+      "💰 *DETALLES DEL PRÉSTAMO:*\n" +
+      "• Monto Solicitado: " + monto + "\n" +
+      "• Modalidad: " + modo + "\n" +
+      "• Plazo Elegido: " + plazoTxt + "\n" +
+      "• Tasa Aplicada: " + tasaTxt + "\n" +
+      "• Total a Devolver: " + totalTxt + "\n" +
+      "• Valor por Cuota: " + cuotaTxt + "\n\n" +
+      "📌 *REQUISITOS ADJUNTOS:* Procedo a adjuntar fotos de cédula, selfie y recibo público.";
+
+    var url = "https://wa.me/" + NUMERO_WHATSAPP + "?text=" + encodeURIComponent(mensaje);
+    window.open(url, '_blank');
+  }
+</script>
+
+</body>
+  </html>
