@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SocioCredits - Libro Digital con Fotos</title>
+  <style>
+    :root {
+      --primary: #00875A;
+      --primary-dark: #006644;
+      --bg: #F4F5F7;
+      --card: #FFFFFF;
+      --text: #172B4D;
+      --danger: #DE350B;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: system-ui, -apple-system, sans-serif; }
+    body { background-color: var(--bg); color: var(--text); padding: 16px; }
+    
+    .container { max-width: 1000px; margin: 0 auto; }
+    
+    h1 { color: var(--primary); margin-bottom: 8px; }
+    p.subtitle { color: #6B778C; margin-bottom: 20px; font-size: 14px; }
+
+    .card { background: var(--card); border-radius: 12px; padding: 20px; box-shadow: 0 4px 12px rgba(0,0,0,0.08); margin-bottom: 20px; }
+    .card-title { font-size: 18px; font-weight: bold; margin-bottom: 16px; border-bottom: 2px solid var(--bg); padding-bottom: 8px; }
+
+    .grid-form { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px; margin-bottom: 12px; }
+    
+    label { display: block; font-size: 12px; font-weight: 600; margin-bottom: 4px; }
+    input, select { width: 100%; padding: 10px; border: 1px solid #DFE1E6; border-radius: 6px; font-size: 14px; }
+
+    .btn { background: var(--primary); color: white; border: none; padding: 12px 20px; border-radius: 6px; font-weight: bold; cursor: pointer; }
+    .btn-danger { background: var(--danger); padding: 6px 10px; font-size: 12px; border: none; color: white; border-radius: 4px; cursor: pointer; }
+    .btn-wa { background: #25D366; color: white; padding: 6px 10px; border-radius: 4px; text-decoration: none; font-size: 12px; font-weight: bold; }
+    .btn-drive { background: #4285F4; color: white; padding: 6px 10px; border-radius: 4px; text-decoration: none; font-size: 12px; font-weight: bold; }
+
+    .table-responsive { overflow-x: auto; }
+    table { width: 100%; border-collapse: collapse; margin-top: 10px; font-size: 13px; text-align: left; }
+    th, td { padding: 10px; border-bottom: 1px solid #DFE1E6; }
+    th { background: #EBECF0; }
+
+    .badge { padding: 4px 8px; border-radius: 4px; font-weight: bold; font-size: 11px; background: #E3FCEF; color: var(--primary-dark); }
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <h1>📖 SocioCredits - Libro Digital de Control</h1>
+  <p class="subtitle">Panel de Administración con Enlace a Evidencias y Fotos (Uso Exclusivo)</p>
+
+  <!-- FORMULARIO DE REGISTRO CON DRIVE -->
+  <div class="card">
+    <div class="card-title">➕ Registrar Nuevo Crédito Aprobado</div>
+    <form id="creditoForm">
+      <div class="grid-form">
+        <div>
+          <label for="regNombre">Cliente:</label>
+          <input type="text" id="regNombre" required placeholder="Nombre completo">
+        </div>
+        <div>
+          <label for="regCelular">Celular (WhatsApp):</label>
+          <input type="tel" id="regCelular" required placeholder="Ej: 3101234567">
+        </div>
+        <div>
+          <label for="regMonto">Total a Cobrar ($):</label>
+          <input type="number" id="regMonto" required placeholder="Ej: 73000">
+        </div>
+        <div>
+          <label for="regCuota">Valor por Cuota ($):</label>
+          <input type="number" id="regCuota" required placeholder="Ej: 18250">
+        </div>
+        <div>
+          <label for="regFecha">Próximo Pago:</label>
+          <input type="date" id="regFecha" required>
+        </div>
+        <div>
+          <label for="regDrive">Link Carpeta Fotos (Google Drive):</label>
+          <input type="url" id="regDrive" placeholder="https://drive.google.com/...">
+        </div>
+      </div>
+      <button type="submit" class="btn">Guardar Crédito en el Libro</button>
+    </form>
+  </div>
+
+  <!-- TABLA DE CONTROL CON FOTOS -->
+  <div class="card">
+    <div class="card-title">📊 Créditos Activos, Documentos y Cobros</div>
+    <div class="table-responsive">
+      <table>
+        <thead>
+          <tr>
+            <th>Cliente</th>
+            <th>Celular</th>
+            <th>Total a Cobrar</th>
+            <th>Valor Cuota</th>
+            <th>Próximo Pago</th>
+            <th>Documentos</th>
+            <th>Cobro Rápido</th>
+            <th>Acción</th>
+          </tr>
+        </thead>
+        <tbody id="tablaCreditos">
+          <!-- Datos dinámicos -->
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<script>
+  var creditos = JSON.parse(localStorage.getItem('sociocredits_libro')) || [];
+
+  function guardarYRenderizar() {
+    localStorage.setItem('sociocredits_libro', JSON.stringify(creditos));
+    renderizarTabla();
+  }
+
+  function renderizarTabla() {
+    var tbody = document.getElementById('tablaCreditos');
+    tbody.innerHTML = '';
+
+    if (creditos.length === 0) {
+      tbody.innerHTML = '<tr><td colspan="8" style="text-align:center; color:#6B778C;">No hay créditos registrados.</td></tr>';
+      return;
+    }
+
+    creditos.forEach(function(item, index) {
+      var tr = document.createElement('tr');
+      
+      var msgWA = "Hola " + item.nombre + ", 👋 te recordamos tu cuota pendiente de $" + item.cuota + " para el día " + item.fecha + ". Gracias por tu pago a SocioCredits.";
+      var linkWA = "https://wa.me/57" + item.celular + "?text=" + encodeURIComponent(msgWA);
+      
+      var btnDriveHTML = item.drive ? '<a href="' + item.drive + '" target="_blank" class="btn-drive">📁 Ver Fotos</a>' : '<span style="color:#6B778C;">Sin fotos</span>';
+
+      tr.innerHTML = 
+        '<td><strong>' + item.nombre + '</strong></td>' +
+        '<td>' + item.celular + '</td>' +
+        '<td>$' + Number(item.monto).toLocaleString('es-CO') + '</td>' +
+        '<td>$' + Number(item.cuota).toLocaleString('es-CO') + '</td>' +
+        '<td><span class="badge">' + item.fecha + '</span></td>' +
+        '<td>' + btnDriveHTML + '</td>' +
+        '<td><a href="' + linkWA + '" target="_blank" class="btn-wa">💬 Cobrar WA</a></td>' +
+        '<td><button class="btn-danger" onclick="eliminarCredito(' + index + ')">Finalizar</button></td>';
+
+      tbody.appendChild(tr);
+    });
+  }
+
+  document.getElementById('creditoForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+    
+    var nuevoCredito = {
+      nombre: document.getElementById('regNombre').value,
+      celular: document.getElementById('regCelular').value,
+      monto: document.getElementById('regMonto').value,
+      cuota: document.getElementById('regCuota').value,
+      fecha: document.getElementById('regFecha').value,
+      drive: document.getElementById('regDrive').value
+    };
+
+    creditos.push(nuevoCredito);
+    guardarYRenderizar();
+    this.reset();
+  });
+
+  function eliminarCredito(index) {
+    if (confirm("¿Confirmas que este crédito fue pagado por completo y deseas cerrarlo?")) {
+      creditos.splice(index, 1);
+      guardarYRenderizar();
+    }
+  }
+
+  renderizarTabla();
+</script>
+
+</body>
+  </html>
