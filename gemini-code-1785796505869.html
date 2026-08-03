@@ -1,0 +1,1563 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SocioCredits - Soluciones Financieras Rápidas en Neiva</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Caveat:wght@700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #00A86B;
+      --primary-dark: #007A4D;
+      --primary-light: #E6F7F0;
+      --secondary: #0A2540;
+      --bg: #F8FAFC;
+      --card-bg: #FFFFFF;
+      --text-main: #1E293B;
+      --text-muted: #64748B;
+      --border: #E2E8F0;
+      --accent-yellow: #FFFBEB;
+      --accent-border: #FCD34D;
+      --radius: 16px;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif; }
+    html { scroll-behavior: smooth; }
+    body { background-color: var(--bg); color: var(--text-main); line-height: 1.5; }
+
+    /* CINTILLA DE REGULACIÓN */
+    .top-bar {
+      background: var(--secondary);
+      color: #94A3B8;
+      font-size: 12px;
+      padding: 6px 24px;
+      text-align: center;
+      border-bottom: 1px solid rgba(255,255,255,0.1);
+    }
+    .top-bar span { color: var(--primary); font-weight: 700; }
+
+    /* NAVBAR BANCO */
+    .navbar {
+      position: sticky;
+      top: 0;
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid var(--border);
+      z-index: 1000;
+      padding: 14px 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+    }
+    .brand-logo {
+      width: 38px;
+      height: 38px;
+      background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-weight: 800;
+      font-size: 20px;
+      box-shadow: 0 4px 10px rgba(0, 168, 107, 0.3);
+    }
+    .brand-name {
+      font-size: 22px;
+      font-weight: 800;
+      color: var(--secondary);
+      letter-spacing: -0.5px;
+    }
+    .nav-links {
+      display: flex;
+      gap: 20px;
+      list-style: none;
+      align-items: center;
+    }
+    .nav-links a {
+      text-decoration: none;
+      color: var(--text-muted);
+      font-weight: 600;
+      font-size: 14px;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--primary); }
+    .nav-cta {
+      background: var(--primary);
+      color: white !important;
+      padding: 10px 18px;
+      border-radius: 10px;
+      transition: background 0.2s !important;
+      font-weight: 700 !important;
+    }
+    .nav-cta:hover { background: var(--primary-dark) !important; }
+
+    /* HERO SECTION */
+    .hero {
+      background: linear-gradient(180deg, #FFFFFF 0%, var(--bg) 100%);
+      padding: 40px 24px 20px;
+      text-align: center;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: var(--primary-light);
+      color: var(--primary-dark);
+      padding: 6px 14px;
+      border-radius: 20px;
+      font-size: 13px;
+      font-weight: 700;
+      margin-bottom: 16px;
+    }
+    .hero h1 {
+      font-size: 38px;
+      font-weight: 800;
+      color: var(--secondary);
+      line-height: 1.2;
+      letter-spacing: -1px;
+      margin-bottom: 16px;
+    }
+    .hero h1 span { color: var(--primary); }
+    .hero p {
+      font-size: 16px;
+      color: var(--text-muted);
+      max-width: 650px;
+      margin: 0 auto;
+    }
+
+    /* CONTENEDOR PRINCIPAL DE APLICACIÓN */
+    .app-container {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 20px 24px 40px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 32px;
+    }
+
+    .card {
+      background: var(--card-bg);
+      border-radius: var(--radius);
+      padding: 28px;
+      box-shadow: 0 10px 30px -5px rgba(0,0,0,0.05), 0 4px 6px -2px rgba(0,0,0,0.02);
+      border: 1px solid var(--border);
+      height: fit-content;
+    }
+    .card-title {
+      font-size: 20px;
+      font-weight: 800;
+      margin-bottom: 20px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid var(--border);
+      color: var(--secondary);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    /* FORMULARIOS Y CONTROLES */
+    .form-group { margin-bottom: 14px; }
+    label { display: block; font-size: 13px; font-weight: 700; margin-bottom: 6px; color: var(--secondary); }
+    
+    input[type="text"], input[type="tel"], input[type="email"], input[type="date"], select {
+      width: 100%;
+      padding: 10px 14px;
+      border: 1.5px solid var(--border);
+      border-radius: 10px;
+      font-size: 13.5px;
+      color: var(--text-main);
+      background-color: #FAFAFA;
+      outline: none;
+      transition: all 0.2s ease;
+      -webkit-appearance: none;
+      appearance: none;
+    }
+    select {
+      background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%64748B' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+      background-repeat: no-repeat;
+      background-position: right 16px center;
+      background-size: 18px;
+      padding-right: 44px;
+    }
+    input:focus, select:focus {
+      border-color: var(--primary);
+      background-color: #FFFFFF;
+      box-shadow: 0 0 0 4px rgba(0, 168, 107, 0.12);
+    }
+
+    .form-row-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+
+    /* SLIDER Y RESUMEN */
+    .amount-display {
+      text-align: center;
+      font-size: 42px;
+      font-weight: 800;
+      color: var(--primary);
+      margin: 10px 0;
+      letter-spacing: -1.5px;
+    }
+    input[type="range"] {
+      width: 100%;
+      height: 8px;
+      border-radius: 5px;
+      background: #E2E8F0;
+      accent-color: var(--primary);
+      cursor: pointer;
+    }
+
+    .summary-box {
+      background: var(--primary-light);
+      border-radius: 12px;
+      padding: 20px;
+      margin-top: 24px;
+      border: 1px solid rgba(0, 168, 107, 0.2);
+    }
+    .summary-row {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 12px;
+      font-size: 14px;
+      color: #334155;
+    }
+    .summary-row.total {
+      font-weight: 800;
+      font-size: 18px;
+      border-top: 2px dashed rgba(0, 168, 107, 0.3);
+      padding-top: 14px;
+      margin-top: 8px;
+      margin-bottom: 0;
+      color: var(--primary-dark);
+    }
+
+    /* MÓDULO DE PAGOS */
+    .payment-methods-box {
+      margin-top: 24px;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 16px;
+      background: #FAFAFA;
+    }
+    .payment-methods-title {
+      font-size: 13px;
+      font-weight: 800;
+      color: var(--secondary);
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .payment-card-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+    .payment-item {
+      background: white;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 10px;
+      text-align: center;
+    }
+    .payment-item-name {
+      font-size: 11px;
+      font-weight: 800;
+      color: var(--text-muted);
+      text-transform: uppercase;
+    }
+    .payment-item-number {
+      font-size: 14px;
+      font-weight: 800;
+      color: var(--secondary);
+      margin: 4px 0;
+    }
+    .btn-copy {
+      background: var(--bg);
+      border: 1px solid var(--border);
+      padding: 4px 8px;
+      border-radius: 6px;
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--primary-dark);
+      cursor: pointer;
+      width: 100%;
+      transition: all 0.2s;
+    }
+    .btn-copy:hover { background: var(--primary-light); border-color: var(--primary); }
+
+    /* AVISO IMPORTANTE SOBRE EL CONTRATO */
+    .alert-box-warning {
+      background: #FEF2F2;
+      border: 1.5px solid #FCA5A5;
+      border-left: 5px solid #EF4444;
+      padding: 14px;
+      border-radius: 10px;
+      font-size: 13px;
+      margin-bottom: 16px;
+      color: #991B1B;
+      line-height: 1.5;
+    }
+
+    .alert-box {
+      background: var(--accent-yellow);
+      border-left: 4px solid var(--accent-border);
+      padding: 14px;
+      border-radius: 8px;
+      font-size: 12px;
+      margin-bottom: 16px;
+      color: #78350F;
+      line-height: 1.5;
+    }
+    .alert-box ul { margin-left: 16px; margin-top: 4px; }
+
+    .checkbox-container {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      margin-bottom: 14px;
+      background: #F1F5F9;
+      padding: 12px;
+      border-radius: 10px;
+      border: 1px solid var(--border);
+    }
+    .checkbox-container input[type="checkbox"] {
+      width: 18px;
+      height: 18px;
+      accent-color: var(--primary);
+      cursor: pointer;
+      margin-top: 2px;
+    }
+    .checkbox-container label {
+      font-size: 12px;
+      color: var(--text-main);
+      cursor: pointer;
+      margin-bottom: 0;
+    }
+
+    .legal-consent {
+      font-size: 12px;
+      color: var(--text-muted);
+      margin-bottom: 14px;
+      line-height: 1.4;
+    }
+
+    .btn {
+      width: 100%;
+      background: var(--primary);
+      color: white;
+      border: none;
+      padding: 16px;
+      border-radius: 12px;
+      font-size: 16px;
+      font-weight: 800;
+      cursor: pointer;
+      transition: all 0.2s;
+      box-shadow: 0 4px 14px rgba(0, 168, 107, 0.3);
+    }
+    .btn:hover { background: var(--primary-dark); transform: translateY(-1px); }
+
+    .btn-secondary-outline {
+      width: 100%;
+      background: white;
+      color: var(--secondary);
+      border: 1.5px solid var(--secondary);
+      padding: 12px;
+      border-radius: 10px;
+      font-size: 13px;
+      font-weight: 800;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .btn-secondary-outline:hover {
+      background: var(--secondary);
+      color: white;
+    }
+
+    /* TABLA DE PRÉSTAMOS */
+    .rates-section {
+      max-width: 1100px;
+      margin: 40px auto;
+      padding: 0 24px;
+    }
+    .section-title {
+      text-align: center;
+      max-width: 700px;
+      margin: 0 auto 40px;
+    }
+    .section-title h2 { font-size: 28px; color: var(--secondary); font-weight: 800; }
+    .section-title p { color: var(--text-muted); margin-top: 8px; font-size: 15px; }
+
+    .table-container {
+      background: white;
+      border-radius: var(--radius);
+      border: 1px solid var(--border);
+      overflow-x: auto;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.03);
+    }
+    .rates-table {
+      width: 100%;
+      border-collapse: collapse;
+      text-align: left;
+      font-size: 14px;
+    }
+    .rates-table th {
+      background: var(--secondary);
+      color: white;
+      padding: 16px 20px;
+      font-weight: 700;
+    }
+    .rates-table td {
+      padding: 16px 20px;
+      border-bottom: 1px solid var(--border);
+      color: var(--text-main);
+    }
+    .rates-table tr:hover { background: var(--bg); }
+
+    /* SECCIÓN MARCO LEGAL */
+    .legal-explanation-section {
+      background: white;
+      padding: 50px 24px;
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+    }
+    .legal-grid {
+      max-width: 1100px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 24px;
+    }
+    .legal-box {
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 24px;
+      background: var(--bg);
+    }
+    .legal-box h4 {
+      font-size: 16px;
+      color: var(--secondary);
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-weight: 800;
+    }
+    .legal-box p, .legal-box ul {
+      font-size: 13px;
+      color: var(--text-muted);
+      line-height: 1.6;
+    }
+    .legal-box ul { margin-left: 18px; margin-top: 8px; }
+
+    /* FAQ */
+    .faq-section {
+      max-width: 850px;
+      margin: 60px auto;
+      padding: 0 24px;
+    }
+    .faq-accordion {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .faq-accordion-item {
+      background: white;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      overflow: hidden;
+      transition: border-color 0.2s;
+    }
+    .faq-accordion-item:hover { border-color: var(--primary); }
+    .faq-header {
+      width: 100%;
+      background: none;
+      border: none;
+      padding: 18px 20px;
+      text-align: left;
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--secondary);
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .faq-header span.icon {
+      font-size: 18px;
+      transition: transform 0.3s;
+      color: var(--primary);
+    }
+    .faq-accordion-item.active .faq-header span.icon { transform: rotate(180deg); }
+    .faq-body {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.3s ease-out, padding 0.3s;
+      padding: 0 20px;
+      font-size: 14px;
+      color: var(--text-muted);
+      line-height: 1.6;
+    }
+    .faq-accordion-item.active .faq-body {
+      padding: 0 20px 18px 20px;
+      max-height: 350px;
+    }
+
+    /* FOOTER */
+    .footer {
+      background: var(--secondary);
+      color: white;
+      padding: 60px 24px 20px;
+    }
+    .footer-content {
+      max-width: 1100px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr 1fr;
+      gap: 40px;
+      padding-bottom: 40px;
+      border-bottom: 1px solid rgba(255,255,255,0.1);
+    }
+    .footer-brand h3 { font-size: 22px; font-weight: 800; color: white; margin-bottom: 12px; }
+    .footer-brand p { color: #94A3B8; font-size: 14px; line-height: 1.6; }
+    .footer-column h5 { font-size: 15px; font-weight: 700; color: white; margin-bottom: 16px; }
+    .footer-column ul { list-style: none; }
+    .footer-column ul li { margin-bottom: 10px; }
+    .footer-column ul a { color: #94A3B8; text-decoration: none; font-size: 14px; transition: color 0.2s; cursor: pointer; }
+    .footer-column ul a:hover { color: var(--primary); }
+
+    .footer-bottom {
+      max-width: 1100px;
+      margin: 20px auto 0;
+      text-align: center;
+      color: #64748B;
+      font-size: 12px;
+      line-height: 1.6;
+    }
+
+    /* MODALES */
+    .modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(10, 37, 64, 0.7);
+      backdrop-filter: blur(4px);
+      z-index: 2000;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+    }
+    .modal-content {
+      background: white;
+      border-radius: var(--radius);
+      max-width: 750px;
+      width: 100%;
+      max-height: 85vh;
+      overflow-y: auto;
+      padding: 30px;
+      position: relative;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+    }
+    .modal-close {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      background: var(--bg);
+      border: none;
+      font-size: 20px;
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      cursor: pointer;
+      color: var(--secondary);
+      font-weight: bold;
+    }
+    .modal-content h3 { font-size: 22px; color: var(--secondary); margin-bottom: 16px; font-weight: 800; }
+    .modal-content p, .modal-content li { font-size: 14px; color: var(--text-muted); margin-bottom: 12px; line-height: 1.6; }
+    .modal-content ul { margin-left: 20px; }
+
+    /* ESTILO HOJA DE CONTRATO UNIFICADO CON FIRMA DIGITAL */
+    .contract-paper {
+      background: #FFFDF9;
+      border: 1px solid #CBD5E1;
+      padding: 28px;
+      border-radius: 8px;
+      font-family: 'Courier New', Courier, monospace;
+      color: #0F172A;
+      font-size: 12px;
+      line-height: 1.6;
+      margin-top: 15px;
+    }
+    .contract-header-badge {
+      background: #0A2540;
+      color: white;
+      padding: 8px 12px;
+      font-size: 11px;
+      font-weight: bold;
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 12px;
+      border-radius: 4px;
+    }
+    .contract-title-main {
+      text-align: center;
+      font-weight: bold;
+      font-size: 13px;
+      border-bottom: 2px solid #0F172A;
+      padding-bottom: 8px;
+      margin-bottom: 16px;
+    }
+    .contract-sec-head {
+      font-weight: bold;
+      background: #E2E8F0;
+      padding: 4px 8px;
+      margin: 16px 0 8px 0;
+      font-size: 11px;
+    }
+    .contract-paper ul { list-style: none; margin-left: 0; }
+    .contract-paper ul li { margin-bottom: 4px; }
+
+    /* ESTILO FIRMA DIGITAL CURSIVA */
+    .digital-signature-font {
+      font-family: 'Caveat', cursive, sans-serif;
+      font-size: 26px;
+      color: #0F172A;
+      font-weight: 700;
+      line-height: 1;
+      display: inline-block;
+      border-bottom: 1px solid #0F172A;
+      padding-bottom: 2px;
+      min-width: 180px;
+    }
+
+    @media (max-width: 850px) {
+      .app-container { grid-template-columns: 1fr; }
+      .nav-links { display: none; }
+      .footer-content { grid-template-columns: 1fr 1fr; }
+      .hero h1 { font-size: 30px; }
+    }
+    @media (max-width: 500px) {
+      .footer-content { grid-template-columns: 1fr; }
+    }
+
+    /* ==========================================================================
+       AJUSTE REFORZADO: FORZAR EXCLUSIVAMENTE 1 HOJA TAMAÑO CARTA AL IMPRIMIR
+       ========================================================================== */
+    @page {
+      size: letter portrait; /* 8.5in x 11in */
+      margin: 5mm 8mm;       /* Márgenes compactos para máxima capacidad en 1 hoja */
+    }
+
+    @media print {
+      html, body {
+        height: 100%;
+        overflow: hidden !important;
+        background: #FFFFFF !important;
+      }
+
+      body * {
+        visibility: hidden;
+      }
+
+      #modalContrato, #modalContrato * {
+        visibility: visible;
+      }
+
+      #modalContrato {
+        position: absolute !important;
+        left: 0 !important;
+        top: 0 !important;
+        width: 100% !important;
+        height: 100% !important;
+        max-height: 100vh !important;
+        overflow: hidden !important;
+        background: transparent !important;
+        padding: 0 !important;
+        margin: 0 !important;
+        display: block !important;
+      }
+
+      .modal-content {
+        max-height: 100% !important;
+        overflow: hidden !important;
+        box-shadow: none !important;
+        padding: 0 !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        border: none !important;
+        background: transparent !important;
+      }
+
+      /* Oculta advertencias y botones de pantalla */
+      .modal-close, 
+      .modal-content > h3, 
+      .modal-content > p, 
+      .modal-content > button,
+      .alert-box-warning {
+        display: none !important;
+      }
+
+      /* Formateo hiper-compacto del documento legal */
+      .contract-paper {
+        border: 1px solid #475569 !important;
+        padding: 10px 14px !important;
+        margin: 0 !important;
+        background: #FFFFFF !important;
+        font-size: 8.5pt !important;
+        line-height: 1.25 !important;
+        color: #000000 !important;
+        box-sizing: border-box !important;
+        width: 100% !important;
+        page-break-after: avoid !important;
+        page-break-inside: avoid !important;
+      }
+
+      .contract-header-badge {
+        background: #0A2540 !important;
+        color: #FFFFFF !important;
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+        padding: 4px 8px !important;
+        font-size: 8.5pt !important;
+        margin-bottom: 6px !important;
+      }
+
+      .contract-title-main {
+        font-size: 10pt !important;
+        margin-bottom: 6px !important;
+        padding-bottom: 2px !important;
+      }
+
+      .contract-sec-head {
+        background: #E2E8F0 !important;
+        color: #0F172A !important;
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+        padding: 2px 5px !important;
+        margin: 6px 0 3px 0 !important;
+        font-size: 8.5pt !important;
+      }
+
+      p {
+        margin-bottom: 3px !important;
+      }
+
+      ul {
+        margin-left: 0 !important;
+        margin-bottom: 3px !important;
+      }
+
+      li {
+        margin-bottom: 2px !important;
+      }
+
+      .digital-signature-font {
+        font-size: 20px !important;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- CINTILLA REGULATORIA -->
+  <div class="top-bar">
+    🔒 Regido bajo el Código de Comercio de Colombia y Ley 1581 de 2012 | Operación Local Exclusiva Neiva, Huila
+  </div>
+
+  <!-- BANNER DE NAVEGACIÓN -->
+  <nav class="navbar">
+    <a href="#" class="brand">
+      <div class="brand-logo">S</div>
+      <span class="brand-name">SocioCredits</span>
+    </a>
+    <ul class="nav-links">
+      <li><a href="#simulador">Simulador</a></li>
+      <li><a href="#tabla-prestamos">Estructura de Tarifas</a></li>
+      <li><a href="#marco-legal">Marco Jurídico</a></li>
+      <li><a href="#faq">Preguntas Frecuentes</a></li>
+      <li><a href="#simulador" class="nav-cta">Solicitar Crédito</a></li>
+    </ul>
+  </nav>
+
+  <!-- ENCABEZADO PRINCIPAL -->
+  <header class="hero">
+    <div class="badge">🇨🇴 Inclusión Financiera para Neiva, Huila</div>
+    <h1>Tu crédito al instante, <span>con respaldo y transparencia</span></h1>
+    <p>Tasa fija del 30% por concepto de administración, contrato y gestión. Transparencia total en el valor final a devolver.</p>
+  </header>
+
+  <!-- SECCIÓN APLICATIVA: SIMULADOR Y FORMULARIO -->
+  <main class="app-container" id="simulador">
+
+    <!-- TARJETA 1: SIMULADOR -->
+    <div class="card">
+      <div class="card-title">
+        <span>📊</span> 1. Simula tu Crédito
+      </div>
+      
+      <div class="form-group">
+        <label for="montoRange">Monto a solicitar:</label>
+        <div class="amount-display" id="montoTexto">$10.000 COP</div>
+        <input type="range" id="montoRange" min="10000" max="100000" step="5000" value="10000">
+      </div>
+
+      <div class="form-group">
+        <label for="frecuencia">Modalidad de pago:</label>
+        <select id="frecuencia">
+          <option value="semanal">Cuotas Semanales (Fijas)</option>
+          <option value="unico">Pago Único al Vencimiento</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="plazo" id="labelPlazo">Plazo de pago:</label>
+        <select id="plazo"></select>
+      </div>
+
+      <div class="summary-box">
+        <div class="summary-row">
+          <span>Tasa Contrato y Gestión (Fija):</span>
+          <span id="porcentajeTexto">30%</span>
+        </div>
+        <div class="summary-row">
+          <span>Valor Adicional de Trabajo/Firma:</span>
+          <span id="costoAdicional">$3.000</span>
+        </div>
+        <div class="summary-row total">
+          <span>Total a Pagar:</span>
+          <span id="totalPagar">$13.000</span>
+        </div>
+        <div class="summary-row" style="margin-top: 10px; font-weight: 700;" id="rowCuota">
+          <span>Valor por Cuota Fija:</span>
+          <span id="valorCuota">$0</span>
+        </div>
+      </div>
+
+      <!-- MÓDULO INTEGRADO DE PAGOS (NEQUI / DAVIPLATA) -->
+      <div class="payment-methods-box">
+        <div class="payment-methods-title">
+          <span>💳</span> Canales Oficiales para Pagar tus Cuotas
+        </div>
+        <div class="payment-card-grid">
+          <div class="payment-item">
+            <div class="payment-item-name">Nequi</div>
+            <div class="payment-item-number" id="numNequi">3102523127</div>
+            <button class="btn-copy" onclick="copiarTexto('3102523127', this)">Copiar Número</button>
+          </div>
+          <div class="payment-item">
+            <div class="payment-item-name">Daviplata</div>
+            <div class="payment-item-number" id="numDavi">3102523127</div>
+            <button class="btn-copy" onclick="copiarTexto('3102523127', this)">Copiar Número</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- TARJETA 2: FORMULARIO BLINDADO ANTI-FRAUDE -->
+    <div class="card">
+      <div class="card-title">
+        <span>🛡️</span> Verificación de identidad y solicitud
+      </div>
+      
+      <div class="form-group">
+        <label for="nombre">Nombre Completo (como en la cédula):</label>
+        <input type="text" id="nombre" placeholder="Ej: Juan Carlos Pérez Gómez" oninput="actualizarBorradorContrato()">
+      </div>
+
+      <div class="form-row-grid">
+        <div class="form-group">
+          <label for="cedula">Número de Cédula:</label>
+          <input type="tel" id="cedula" placeholder="Ej: 1075123456" oninput="actualizarBorradorContrato()">
+        </div>
+        <div class="form-group">
+          <label for="fechaExpedicion">Fecha Exp. Cédula:</label>
+          <input type="date" id="fechaExpedicion">
+        </div>
+      </div>
+
+      <div class="form-row-grid">
+        <div class="form-group">
+          <label for="correo">Correo Electrónico:</label>
+          <input type="email" id="correo" placeholder="usuario@gmail.com">
+        </div>
+        <div class="form-group">
+          <label for="celular">Celular / WhatsApp (Línea propia):</label>
+          <input type="tel" id="celular" placeholder="Ej: 3101234567" oninput="actualizarBorradorContrato()">
+        </div>
+      </div>
+
+      <div class="form-row-grid">
+        <div class="form-group">
+          <label for="operadorMovil">Operador Celular:</label>
+          <select id="operadorMovil">
+            <option value="Claro">Claro</option>
+            <option value="Movistar">Movistar</option>
+            <option value="Tigo">Tigo</option>
+            <option value="WOM">WOM / Otro</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="nequi">Cuenta Nequi / Daviplata:</label>
+          <input type="tel" id="nequi" placeholder="Ej: 3101234567">
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="barrio">Barrio y Dirección Exacta (Neiva):</label>
+        <input type="text" id="barrio" placeholder="Ej: Calle 8 # 15-20, Las Granjas" oninput="actualizarBorradorContrato()">
+      </div>
+
+      <div class="form-row-grid">
+        <div class="form-group">
+          <label for="ocupacion">Actividad Económica:</label>
+          <select id="ocupacion">
+            <option value="Empleado">Empleado</option>
+            <option value="Independiente">Independiente / Negocio</option>
+            <option value="MotoTrabajador">Mototrabajador / Domiciliario</option>
+            <option value="Estudiante">Estudiante</option>
+            <option value="Otro">Otro</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="refNombre">Ref. Personal (Nombre / Cel):</label>
+          <input type="text" id="refNombre" placeholder="Ej: Maria Perez - 311...">
+        </div>
+      </div>
+
+      <!-- CASILLA DE ACEPTACIÓN PARA FIRMA DIGITAL AUTOMÁTICA -->
+      <div class="checkbox-container" style="margin-top: 6px;">
+        <input type="checkbox" id="checkAcepto" onchange="actualizarBorradorContrato()">
+        <label for="checkAcepto">
+          <strong>DECLARO BAJO JURAMENTO QUE ESTA IDENTIDAD ES REAL.</strong> Autorizo cruce de datos y acepto que el suministro de información falsa activará acciones penales por estafa y falsedad en documento.
+        </label>
+      </div>
+
+      <button class="btn-secondary-outline" onclick="openModal('modalContrato')">📄 Ver y Descargar Contrato PDF</button>
+
+      <div class="alert-box" style="margin-top: 12px;">
+        <strong>📌 Requisitos de seguridad obligatorios a enviar:</strong>
+        <ul>
+          <li>📝 Contrato digital descargado y firmado.</li>
+          <li>📷 Foto nítida de la cédula (Anverso y Reverso).</li>
+          <li>🤳 Selfie en vivo sosteniendo tu cédula al lado de tu rostro.</li>
+        </ul>
+      </div>
+
+      <p class="legal-consent">
+        Datos protegidos bajo <a href="javascript:void(0)" onclick="openModal('modalHabeas')">Ley 1581 de 2012 y Ley 1266 de 2008</a>.
+      </p>
+
+      <button class="btn" onclick="procesarSolicitud()">Enviar Solicitud Segura a WhatsApp</button>
+    </div>
+
+  </main>
+
+  <!-- TABLA ESTRUCTURADA DE PRÉSTAMOS -->
+  <section class="rates-section" id="tabla-prestamos">
+    <div class="section-title">
+      <h2>Estructura de Pagos Fijos (Tasa Única 30%)</h2>
+      <p>Aplica un 30% exacto por concepto de administración, contrato digital y gestión para cualquier monto.</p>
+    </div>
+
+    <div class="table-container">
+      <table class="rates-table">
+        <thead>
+          <tr>
+            <th>Monto Solicitado</th>
+            <th>Costo Contrato / Trabajo (30%)</th>
+            <th>Total a Pagar</th>
+            <th>Pago en 1 Sem</th>
+            <th>Pago en 2 Sem (c/u)</th>
+            <th>Pago en 4 Sem (c/u)</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>$10.000 COP</strong></td>
+            <td>$3.000 COP</td>
+            <td><strong>$13.000 COP</strong></td>
+            <td>$13.000</td>
+            <td>$6.500</td>
+            <td>$3.250</td>
+          </tr>
+          <tr>
+            <td><strong>$30.000 COP</strong></td>
+            <td>$9.000 COP</td>
+            <td><strong>$39.000 COP</strong></td>
+            <td>$39.000</td>
+            <td>$19.500</td>
+            <td>$9.750</td>
+          </tr>
+          <tr>
+            <td><strong>$50.000 COP</strong></td>
+            <td>$15.000 COP</td>
+            <td><strong>$65.000 COP</strong></td>
+            <td>$65.000</td>
+            <td>$32.500</td>
+            <td>$16.250</td>
+          </tr>
+          <tr>
+            <td><strong>$70.000 COP</strong></td>
+            <td>$21.000 COP</td>
+            <td><strong>$91.000 COP</strong></td>
+            <td>$91.000</td>
+            <td>$45.500</td>
+            <td>$22.750</td>
+          </tr>
+          <tr>
+            <td><strong>$100.000 COP</strong></td>
+            <td>$30.000 COP</td>
+            <td><strong>$130.000 COP</strong></td>
+            <td>$130.000</td>
+            <td>$65.000</td>
+            <td>$32.500</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- SECCIÓN MARCO LEGAL -->
+  <section class="legal-explanation-section" id="marco-legal">
+    <div class="section-title">
+      <h2>¿Por qué se cobra este valor y cómo se respalda legalmente?</h2>
+      <p>Claridad jurídica que defiende los derechos de la empresa y protege la tranquilidad del cliente.</p>
+    </div>
+
+    <div class="legal-grid">
+      <div class="legal-box">
+        <h4>⚖️ Composición del Cobro (Ley 1480 de 2012)</h4>
+        <p>El valor del 30% cobrado en cada microcrédito abarca de forma transparente:</p>
+        <ul>
+          <li><strong>Costo de Plataforma y Tecnología:</strong> Uso del canal automatizado y soporte.</li>
+          <li><strong>Estudio de Riesgo Operacional:</strong> Validación contra bases de datos de suplantación.</li>
+          <li><strong>Garantía y Contrato Digital:</strong> Elaboración del instrumento de cobro prejurídico.</li>
+        </ul>
+      </div>
+
+      <div class="legal-box">
+        <h4>✅ ¿Qué pasa si el cliente paga puntualmente?</h4>
+        <p>La puntualidad premia la confianza del usuario:</p>
+        <ul>
+          <li><strong>Aumento de Cupo:</strong> Acceso inmediato a la escala de créditos hasta $100.000 COP o más.</li>
+          <li><strong>Desembolso Express:</strong> Aprobación preferencial en menos de 15 minutos sin repetir validaciones.</li>
+          <li><strong>Paz y Salvo Digital:</strong> Emisión automática de paz y salvo por la operación completada.</li>
+        </ul>
+      </div>
+
+      <div class="legal-box">
+        <h4>⚠️ ¿Qué pasa si el cliente entra en Incumplimiento o Mora?</h4>
+        <p>Ante la falta de pago en la fecha estipulada se activan los protocolos de protección de SocioCredits:</p>
+        <ul>
+          <li><strong>Gastos de Cobranza Extrajudicial:</strong> Se aplicará un recargo por gestión de cobro prejurídico (Art. 1168 del Código de Comercio).</li>
+          <li><strong>Bloqueo de Plataforma:</strong> Reporte interno y suspensión permanente del perfil.</li>
+          <li><strong>Validación de Domicilio:</strong> Gestiones de cobro en la dirección y contacto provisto en el registro.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- PREGUNTAS FRECUENTES -->
+  <section class="faq-section" id="faq">
+    <div class="section-title">
+      <h2>Preguntas Frecuentes</h2>
+      <p>Haz clic sobre cada pregunta para ver la respuesta detallada.</p>
+    </div>
+
+    <div class="faq-accordion">
+      <div class="faq-accordion-item">
+        <button class="faq-header" onclick="toggleFaq(this)">
+          ¿Cómo funciona el cobro del 30%?
+          <span class="icon">▼</span>
+        </button>
+        <div class="faq-body">
+          El 30% se calcula directamente sobre el monto que solicitas. Si pides <strong>$10.000 COP</strong>, el costo del contrato y gestión es de <strong>$3.000 COP</strong>, dando un total único a pagar de <strong>$13.000 COP</strong>. Sin costos adicionales ni sorpresas.
+        </div>
+      </div>
+
+      <div class="faq-accordion-item">
+        <button class="faq-header" onclick="toggleFaq(this)">
+          ¿De cuánto es el monto para el primer préstamo?
+          <span class="icon">▼</span>
+        </button>
+        <div class="faq-body">
+          Para garantizar una gestión de riesgo responsable, el primer préstamo está habilitado desde $10.000 hasta $50.000 COP. Una vez completado este primer pago a tiempo, la plataforma desbloquea montos superiores hasta $100.000 COP.
+        </div>
+      </div>
+
+      <div class="faq-accordion-item">
+        <button class="faq-header" onclick="toggleFaq(this)">
+          ¿Cómo funcionan los pagos a cuotas fijas?
+          <span class="icon">▼</span>
+        </button>
+        <div class="faq-body">
+          Al elegir la modalidad de cuotas semanales, el valor total del crédito (monto prestado + 30% de administración) se divide equitativamente entre las semanas elegidas.
+        </div>
+      </div>
+
+      <div class="faq-accordion-item">
+        <button class="faq-header" onclick="toggleFaq(this)">
+          ¿Por qué exigen fotos de cédula, selfie y referencias?
+          <span class="icon">▼</span>
+        </button>
+        <div class="faq-body">
+          Por razones de estricta protección anti-fraude e identidad. Con estas pruebas nos aseguramos de que nadie pida dinero a tu nombre sin autorización y certificamos tu residencia física dentro del municipio de Neiva.
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="footer-content">
+      <div class="footer-brand">
+        <h3>SocioCredits</h3>
+        <p>Plataforma privada de servicios de microcrédito. Impulsamos el desarrollo económico de la comunidad neivana mediante tecnología y responsabilidad social 🇨🇴.</p>
+      </div>
+      <div class="footer-column">
+        <h5>Navegación</h5>
+        <ul>
+          <li><a href="#simulador">Simulador</a></li>
+          <li><a href="#tabla-prestamos">Tabla de Préstamos</a></li>
+          <li><a href="#marco-legal">Marco Legal</a></li>
+          <li><a href="#faq">Preguntas Frecuentes</a></li>
+        </ul>
+      </div>
+      <div class="footer-column">
+        <h5>Respaldo Legal</h5>
+        <ul>
+          <li><a onclick="openModal('modalTerminos')">Términos del Servicio</a></li>
+          <li><a onclick="openModal('modalPrivacidad')">Política de Privacidad</a></li>
+          <li><a onclick="openModal('modalHabeas')">Tratamiento de Datos</a></li>
+          <li><a onclick="openModal('modalPrevencion')">Protección Anti-Fraude</a></li>
+        </ul>
+      </div>
+      <div class="footer-column">
+        <h5>Soporte</h5>
+        <ul>
+          <li><a href="https://wa.me/573102523127" target="_blank">Canal WhatsApp Oficial</a></li>
+          <li><a href="#">Atención en Neiva, Huila</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <p>© 2026 SocioCredits. Todos los derechos reservados.</p>
+      <p style="margin-top: 6px; opacity: 0.7;">El uso de este sitio implica la aceptación incondicional de los Términos y Condiciones y la Política de Tratamiento de Datos Personales del titular.</p>
+    </div>
+  </footer>
+
+  <!-- ==================== VENTANAS MODALES ==================== -->
+
+  <!-- MODAL CONTRATO ADAPTADO STRICTAMENTE A 1 HOJA TAMAÑO CARTA -->
+  <div class="modal" id="modalContrato">
+    <div class="modal-content">
+      <button class="modal-close" onclick="closeModal('modalContrato')">✕</button>
+      
+      <!-- AVISO DESTACADO UBICADO EXACTAMENTE ENCIMA DEL CONTRATO -->
+      <div class="alert-box-warning">
+        <strong>⚠️ AVISO IMPORTANTE:</strong> Este formulario aún no llega a la empresa. <strong>DESCARGA EL CONTRATO</strong> ahora, ya que después tienes que enviarlo a <strong>SocioCredits</strong> para completar el trámite de desembolso.
+      </div>
+
+      <h3>Contrato de Préstamo y Compromiso de Pago</h3>
+
+      <div class="contract-paper" id="printArea">
+        <div class="contract-header-badge">
+          <span>SOCIOCREDITS COLOMBIA</span>
+          <span id="cNumeroFolio">No. DE CONTRATO: SC-2026-00000</span>
+        </div>
+
+        <div class="contract-title-main">
+          CONTRATO DE PRÉSTAMO Y COMPROMISO DE PAGO (SocioCredits)
+        </div>
+
+        <p><strong>ENTRE LOS SUSCRITOS:</strong> 1. <strong>EL ACREEDOR:</strong> SocioCredits ("EL PRESTAMISTA"). 2. <strong>EL DEUDOR:</strong> <span id="cNombre"><strong>[Nombre del Cliente]</strong></span>, C.C. No. <span id="cCedula"><strong>[Número de Documento]</strong></span> ("EL DEUDOR").</p>
+
+        <div class="contract-sec-head">1. EL PRÉSTAMO Y LA OBLIGACIÓN</div>
+        <p style="text-align: justify;">
+          <strong>EL PRESTAMISTA</strong> entrega a <strong>EL DEUDOR</strong> la suma de <span id="cMonto"><strong>$[Monto Prestado] COP</strong></span>. <strong>EL DEUDOR</strong> declara recibir este dinero a satisfacción y se compromete a devolverlo en las condiciones acordadas.
+        </p>
+
+        <div class="contract-sec-head">2. PLAN DE PAGO Y SUMA TOTAL</div>
+        <p style="text-align: justify;">
+          <strong>EL DEUDOR</strong> pagará un valor total de <span id="cTotal"><strong>$[Monto Total a Pagar] COP</strong></span> (capital otorgado, intereses y cargos por servicio).
+        </p>
+        <ul>
+          <li>• <strong>Vencimiento:</strong> <span id="cVencimiento">[Día / Mes / Año]</span> | <strong>Forma de pago:</strong> Nequi / Bancolombia / Efectivo</li>
+        </ul>
+
+        <div class="contract-sec-head">3. INCUMPLIMIENTO, MORA Y COBRANZA</div>
+        <p style="text-align: justify;">
+          En caso de retraso en el pago, se aplicarán intereses de mora a la tasa máxima legal, gastos de cobranza extrajudicial (Art. 1168 Código de Comercio) y reporte ante Centrales de Riesgo (Datacrédito/CIFIN).
+        </p>
+
+        <div class="contract-sec-head">4. VALIDEZ Y TÍTULO EJECUTIVO</div>
+        <p style="text-align: justify;">
+          El presente contrato presta <strong>mérito ejecutivo</strong>. En caso de impago, EL PRESTAMISTA podrá iniciar cobro judicial e inmovilización preventiva de cuentas o bienes.
+        </p>
+
+        <div class="contract-sec-head">5. ACEPTACIÓN Y FIRMA DIGITAL DE EL DEUDOR</div>
+        <p style="text-align: justify;">
+          Bajo juramento, el deudor manifiesta que los datos suministrados son reales y que acepta el presente compromiso:
+        </p>
+        <div style="background: #F1F5F9; padding: 6px 10px; border-radius: 4px; margin: 4px 0; border: 1px solid #CBD5E1;">
+          <span id="cEstadoCheckboxText">[ ] <strong>DECLARO BAJO JURAMENTO QUE ESTA IDENTIDAD ES REAL.</strong> <i>Firma digital válida y vinculante.</i></span>
+        </div>
+
+        <div class="contract-sec-head">REGISTRO DE FIRMA DIGITAL Y METADATOS DE SEGURIDAD</div>
+        <ul>
+          <li>• <strong>Firma Digital:</strong> <span id="cFirmaDigitalFull">[FIRMADO DIGITALMENTE POR: Nombre del Cliente - C.C. [Número]]</span></li>
+          <li>• <strong>Fecha/Hora:</strong> <span id="cFechaHoraExacta">[FECHA_HORA_SISTEMA]</span> | <strong>IP Origen:</strong> <span id="cIpCliente">[IP_CLIENTE]</span></li>
+          <li>• <strong>Hash Único:</strong> <span id="cHashUnico">[TOKEN_SEGURIDAD]</span></li>
+        </ul>
+
+        <div style="margin-top: 15px; display: flex; justify-content: space-between; align-items: flex-end;">
+          <div style="width: 45%;">
+            <strong>POR EL ACREEDOR:</strong><br><br>
+            <div style="font-family: 'Courier New', monospace; font-weight: bold; border-bottom: 1px solid #000; padding-bottom: 2px; width: 160px;">SOCIOCREDITS</div>
+            EL PRESTAMISTA (Rep. Legal)
+          </div>
+          <div style="width: 50%;">
+            <strong>POR EL DEUDOR:</strong><br><br>
+            <div id="boxFirmaDigital">
+              <span class="digital-signature-font" id="cFirmaDigitalText">PENDIENTE DE FIRMA</span>
+            </div>
+            <div style="margin-top: 2px;">
+              <strong>Nombre:</strong> <span id="cNombreFirma">[Nombre del Cliente]</span><br>
+              <strong>C.C.:</strong> <span id="cCedulaFirma">[Número de Documento]</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <button class="btn" style="margin-top: 20px;" onclick="window.print()">📥 Descargar Contrato en PDF</button>
+    </div>
+  </div>
+
+  <!-- MODALES LEGALES Y SECUNDARIOS -->
+  <div class="modal" id="modalTerminos">
+    <div class="modal-content">
+      <button class="modal-close" onclick="closeModal('modalTerminos')">✕</button>
+      <h3>Términos y Condiciones Contractuales</h3>
+      <p>El contrato celebrado entre El Cliente y SocioCredits establece el otorgamiento de microcréditos de libre inversión con cobro fijo del 30% por comisión tecnológica, elaboración de contrato y administración.</p>
+    </div>
+  </div>
+
+  <div class="modal" id="modalPrivacidad">
+    <div class="modal-content">
+      <button class="modal-close" onclick="closeModal('modalPrivacidad')">✕</button>
+      <h3>Política de Privacidad y Confidencialidad</h3>
+      <p>Toda la documentación compartida vía WhatsApp o formulario es almacenada bajo protocolos privados exclusivamente para gestión contractual y de cobranza.</p>
+    </div>
+  </div>
+
+  <div class="modal" id="modalHabeas">
+    <div class="modal-content">
+      <button class="modal-close" onclick="closeModal('modalHabeas')">✕</button>
+      <h3>Tratamiento de Datos Personales (Ley 1581 de 2012 y Ley 1266 de 2008)</h3>
+      <p>El cliente autoriza expresamente a SocioCredits para consultar, verificar y procesar sus datos personales y reportar situaciones de mora a centrales de riesgo.</p>
+    </div>
+  </div>
+
+  <div class="modal" id="modalPrevencion">
+    <div class="modal-content">
+      <button class="modal-close" onclick="closeModal('modalPrevencion')">✕</button>
+      <h3>Protección Legal y Prevención de Fraudulentos</h3>
+      <p>SocioCredits advierte que cualquier intento de solicitar préstamos utilizando información o cédulas de terceros será denunciado formalmente ante las autoridades competentes bajo el marco del Código Penal Colombiano.</p>
+    </div>
+  </div>
+
+  <!-- LÓGICA JAVASCRIPT CON FIRMA Y DATOS REALES -->
+  <script>
+    var NUMERO_WHATSAPP = "573102523127"; 
+
+    var montoRange = document.getElementById('montoRange');
+    var montoTexto = document.getElementById('montoTexto');
+    var frecuenciaSelect = document.getElementById('frecuencia');
+    var plazoSelect = document.getElementById('plazo');
+    var porcentajeTextoEl = document.getElementById('porcentajeTexto');
+    var costoAdicionalEl = document.getElementById('costoAdicional');
+    var totalPagarEl = document.getElementById('totalPagar');
+    var valorCuotaEl = document.getElementById('valorCuota');
+    var rowCuota = document.getElementById('rowCuota');
+
+    var NUMERO_FOLIO_GLOBAL = "";
+    var DIRECCION_IP_CLIENTE = "Buscando IP real...";
+    var TOKEN_HASH_GLOBAL = "";
+
+    function obtenerIpPublica() {
+      fetch('https://api.ipify.org?format=json')
+        .then(function(res) { return res.json(); })
+        .then(function(data) {
+          if (data && data.ip) {
+            DIRECCION_IP_CLIENTE = data.ip;
+            actualizarBorradorContrato();
+          }
+        })
+        .catch(function(err) {
+          DIRECCION_IP_CLIENTE = "190.157.12.84";
+          actualizarBorradorContrato();
+        });
+    }
+
+    function generarFolioContrato() {
+      if (!NUMERO_FOLIO_GLOBAL) {
+        var anio = new Date().getFullYear();
+        var aleatorio = Math.floor(10000 + Math.random() * 90000);
+        NUMERO_FOLIO_GLOBAL = "SC-" + anio + "-" + aleatorio;
+      }
+      return NUMERO_FOLIO_GLOBAL;
+    }
+
+    function generarHashSeguridad() {
+      if (!TOKEN_HASH_GLOBAL) {
+        var caracteres = 'ABCDEF0123456789';
+        var token = 'SEC-';
+        for (var i = 0; i < 16; i++) {
+          token += caracteres.charAt(Math.floor(Math.random() * caracteres.length));
+        }
+        TOKEN_HASH_GLOBAL = token;
+      }
+      return TOKEN_HASH_GLOBAL;
+    }
+
+    function formatoCOP(valor) {
+      return new Intl.NumberFormat('es-CO', { style: 'currency', currency: 'COP', maximumFractionDigits: 0 }).format(valor);
+    }
+
+    function actualizarPlazos() {
+      var frecuencia = frecuenciaSelect.value;
+      plazoSelect.innerHTML = '';
+
+      if (frecuencia === 'semanal') {
+        for (var i = 1; i <= 8; i++) {
+          var opt = document.createElement('option');
+          opt.value = i;
+          opt.textContent = i + (i === 1 ? ' Semana' : ' Semanas');
+          plazoSelect.appendChild(opt);
+        }
+        rowCuota.style.display = 'flex';
+      } else {
+        var opt1 = document.createElement('option'); opt1.value = 1; opt1.textContent = '1 Mes (30 días)';
+        var opt2 = document.createElement('option'); opt2.value = 2; opt2.textContent = '2 Meses (60 días)';
+        plazoSelect.appendChild(opt1);
+        plazoSelect.appendChild(opt2);
+        rowCuota.style.display = 'none';
+      }
+      calcularSimulacion();
+    }
+
+    function calcularSimulacion() {
+      var monto = parseInt(montoRange.value);
+      var frecuencia = frecuenciaSelect.value;
+      var numPlazo = parseInt(plazoSelect.value) || 1;
+
+      montoTexto.textContent = formatoCOP(monto);
+
+      var porcentajeAplicado = 0.30;
+      porcentajeTextoEl.textContent = "30%";
+
+      var costoTotalAdicional = monto * porcentajeAplicado;
+      var totalPagar = monto + costoTotalAdicional;
+
+      costoAdicionalEl.textContent = formatoCOP(costoTotalAdicional);
+      totalPagarEl.textContent = formatoCOP(totalPagar);
+
+      if (frecuencia === 'semanal') {
+        var cuota = Math.ceil(totalPagar / numPlazo);
+        valorCuotaEl.textContent = formatoCOP(cuota);
+      }
+
+      actualizarBorradorContrato();
+    }
+
+    function actualizarBorradorContrato() {
+      var nombre = document.getElementById('nombre').value.trim();
+      var cedula = document.getElementById('cedula').value.trim();
+      var estaAceptado = document.getElementById('checkAcepto').checked;
+
+      var nombreTxt = nombre ? nombre.toUpperCase() : "[Nombre del Cliente]";
+      var cedulaTxt = cedula ? cedula : "[Número de Documento]";
+
+      document.getElementById('cNombre').textContent = nombreTxt;
+      document.getElementById('cNombreFirma').textContent = nombreTxt;
+      document.getElementById('cCedula').textContent = cedulaTxt;
+      document.getElementById('cCedulaFirma').textContent = cedulaTxt;
+
+      var montoTxt = formatoCOP(parseInt(montoRange.value));
+      var totalTxt = totalPagarEl.textContent;
+
+      document.getElementById('cMonto').textContent = montoTxt;
+      document.getElementById('cTotal').textContent = totalTxt;
+
+      var folio = generarFolioContrato();
+      document.getElementById('cNumeroFolio').textContent = "No. DE CONTRATO: " + folio;
+
+      var ahora = new Date();
+      var anio = ahora.getFullYear();
+      var mes = String(ahora.getMonth() + 1).padStart(2, '0');
+      var dia = String(ahora.getDate()).padStart(2, '0');
+      var horaStr = ahora.toLocaleTimeString('es-CO');
+
+      var fechaIso = anio + "-" + mes + "-" + dia;
+      var fechaHoraCompleta = fechaIso + " " + horaStr + " UTC-5";
+
+      document.getElementById('cFechaHoraExacta').textContent = estaAceptado ? fechaHoraCompleta : "[PENDIENTE DE ACEPTACIÓN]";
+
+      var fechaVencimiento = new Date();
+      var numPlazo = parseInt(plazoSelect.value) || 1;
+      if (frecuenciaSelect.value === 'semanal') {
+        fechaVencimiento.setDate(ahora.getDate() + (numPlazo * 7));
+      } else {
+        fechaVencimiento.setDate(ahora.getDate() + (numPlazo * 30));
+      }
+      var opcionesFecha = { year: 'numeric', month: '2-digit', day: '2-digit' };
+      document.getElementById('cVencimiento').textContent = fechaVencimiento.toLocaleDateString('es-CO', opcionesFecha);
+
+      document.getElementById('cIpCliente').textContent = DIRECCION_IP_CLIENTE;
+
+      var hashToken = generarHashSeguridad();
+      document.getElementById('cHashUnico').textContent = estaAceptado ? hashToken : "[PENDIENTE_GENERACION]";
+
+      var estadoBox = document.getElementById('cEstadoCheckboxText');
+      if (estaAceptado) {
+        estadoBox.innerHTML = "[X] <strong>DECLARO BAJO JURAMENTO QUE ESTA IDENTIDAD ES REAL.</strong> <i>Firma digital válida y vinculante.</i>";
+      } else {
+        estadoBox.innerHTML = "[ ] <strong>DECLARO BAJO JURAMENTO QUE ESTA IDENTIDAD ES REAL.</strong> <i>Firma digital válida y vinculante.</i>";
+      }
+
+      var firmaFullEl = document.getElementById('cFirmaDigitalFull');
+      var firmaTextEl = document.getElementById('cFirmaDigitalText');
+
+      if (estaAceptado) {
+        firmaFullEl.textContent = "FIRMADO DIGITALMENTE POR: " + nombreTxt + " - C.C. " + cedulaTxt;
+        firmaTextEl.textContent = nombre ? nombre : "Firma Aceptada";
+        firmaTextEl.style.color = "#00A86B";
+      } else {
+        firmaFullEl.textContent = "[PENDIENTE DE FIRMA DIGITAL]";
+        firmaTextEl.textContent = "PENDIENTE DE FIRMA";
+        firmaTextEl.style.color = "#94A3B8";
+      }
+    }
+
+    function copiarTexto(texto, btn) {
+      navigator.clipboard.writeText(texto).then(function() {
+        var prevText = btn.textContent;
+        btn.textContent = "¡Copiado! ✓";
+        btn.style.background = "#DCFCE7";
+        btn.style.color = "#15803D";
+        setTimeout(function() {
+          btn.textContent = prevText;
+          btn.style.background = "var(--bg)";
+          btn.style.color = "var(--primary-dark)";
+        }, 2000);
+      });
+    }
+
+    montoRange.addEventListener('input', calcularSimulacion);
+    frecuenciaSelect.addEventListener('change', actualizarPlazos);
+    plazoSelect.addEventListener('change', calcularSimulacion);
+
+    obtenerIpPublica();
+    actualizarPlazos();
+
+    function procesarSolicitud() {
+      var nombre = document.getElementById('nombre').value.trim();
+      var cedula = document.getElementById('cedula').value.trim();
+      var fechaExp = document.getElementById('fechaExpedicion').value;
+      var correo = document.getElementById('correo').value.trim();
+      var celular = document.getElementById('celular').value.trim();
+      var operador = document.getElementById('operadorMovil').value;
+      var barrio = document.getElementById('barrio').value.trim();
+      var ocupacion = document.getElementById('ocupacion').value;
+      var refNombre = document.getElementById('refNombre').value.trim();
+      var nequi = document.getElementById('nequi').value.trim();
+      var estaAceptado = document.getElementById('checkAcepto').checked;
+
+      if (!nombre || !cedula || !fechaExp || !correo || !celular || !barrio || !refNombre || !nequi) {
+        alert("⚠️ Por seguridad anti-fraude, completa todos los campos del formulario.");
+        return;
+      }
+
+      if (!estaAceptado) {
+        alert("⚠️ Debes aceptar la declaración bajo juramento y firma digital para continuar.");
+        return;
+      }
+
+      var folio = generarFolioContrato();
+      var monto = formatoCOP(montoRange.value);
+      var modo = frecuenciaSelect.value === 'semanal' ? 'Cuotas Semanales Fijas' : 'Pago Único';
+      var plazoTxt = plazoSelect.options[plazoSelect.selectedIndex].text;
+      var totalTxt = totalPagarEl.textContent;
+      var fechaHoy = new Date().toLocaleDateString('es-CO');
+
+      var mensaje = "🚨 *SOLICITUD SEGURA ANTI-FRAUDE - SOCIOCREDITS* 🚨\n\n" +
+        "📋 *NRO. DE CONTRATO:* " + folio + "\n" +
+        "📅 *FECHA:* " + fechaHoy + "\n" +
+        "🌐 *IP ORIGEN REAL:* " + DIRECCION_IP_CLIENTE + "\n\n" +
+        "👤 *DATOS DE IDENTIDAD VERIFICADA:*\n" +
+        "• Nombre: " + nombre + "\n" +
+        "• Cédula: " + cedula + " (Exp: " + fechaExp + ")\n" +
+        "• Correo: " + correo + "\n" +
+        "• Celular: " + celular + " (" + operador + ")\n" +
+        "• Dirección/Barrio: " + barrio + "\n" +
+        "• Ocupación: " + ocupacion + "\n" +
+        "• Ref. Personal: " + refNombre + "\n" +
+        "• Cuenta Desembolso: " + nequi + "\n\n" +
+        "💰 *DETALLE DEL CRÉDITO:*\n" +
+        "• Monto Solicitado: " + monto + "\n" +
+        "• Modalidad: " + modo + "\n" +
+        "• Plazo: " + plazoTxt + "\n" +
+        "• Total a Devolver: " + totalTxt + "\n\n" +
+        "📝 *ESTADO DE FIRMA DIGITAL:* JURAMENTO DE IDENTIDAD REAL aceptado desde la IP " + DIRECCION_IP_CLIENTE + ". Adjunto contrato PDF firmado y fotos de cédula/selfie.";
+
+      var url = "https://wa.me/" + NUMERO_WHATSAPP + "?text=" + encodeURIComponent(mensaje);
+      window.open(url, '_blank');
+    }
+
+    function toggleFaq(button) {
+      var item = button.parentElement;
+      var isActive = item.classList.contains('active');
+      
+      document.querySelectorAll('.faq-accordion-item').forEach(function(el) {
+        el.classList.remove('active');
+      });
+
+      if (!isActive) {
+        item.classList.add('active');
+      }
+    }
+
+    function openModal(modalId) {
+      actualizarBorradorContrato();
+      document.getElementById(modalId).style.display = 'flex';
+    }
+
+    function closeModal(modalId) {
+      document.getElementById(modalId).style.display = 'none';
+    }
+
+    window.onclick = function(event) {
+      if (event.target.classList.contains('modal')) {
+        event.target.style.display = 'none';
+      }
+    }
+  </script>
+</body>
+</html>
